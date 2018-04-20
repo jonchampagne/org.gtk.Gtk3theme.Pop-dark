@@ -1,0 +1,47 @@
+{
+  "id": "org.gtk.Gtk3theme.Pop-dark",
+  "branch": "3.22",
+  "runtime": "org.gnome.Sdk",
+  "build-extension": true,
+  "sdk": "org.gnome.Sdk",
+  "runtime-version": "3.24",
+  "appstream-compose": false,
+  "separate-locales": false,
+  "modules": [
+    {
+      "name": "Pop",
+      "buildsystem": "simple",
+      "build-commands": [
+        "ar x pop-gtk-theme.deb",
+        "tar -xf data.tar.xz",
+
+        "install -dm755 /usr/share/runtime/share/themes/Pop-dark/gtk-3.0",
+        "cp -aL usr/share/themes/Pop-dark/gtk-3.22/* /usr/share/runtime/share/themes/Pop-dark/gtk-3.0",
+        "cp -a usr/share/themes/Pop-dark/index.theme /usr/share/runtime/share/themes/Pop-dark"
+      ],
+      "sources": [
+        {
+            "type": "file",
+            "url": "https://launchpad.net/~system76/+archive/ubuntu/pop/+files/pop-gtk-theme_3.1.1~1523554988~18.04~7a80023_all.deb",
+            "dest-filename": "pop-gtk-theme.deb",
+            "sha256": "df25878eb18dab65af2dccc5271b51eb5f235bf2be9825cef36c6aa76ebc9a78"
+        }
+      ]
+    },
+    {
+      "name": "appdata",
+      "buildsystem": "simple",
+      "build-commands": [
+        "mkdir -p ${FLATPAK_DEST}/share/appdata",
+        "cp org.gtk.Gtk3theme.Pop-dark.appdata.xml ${FLATPAK_DEST}/share/appdata",
+        "appstream-compose --basename=org.gtk.Gtk3theme.Pop-dark --prefix=${FLATPAK_DEST} --origin=flatpak org.gtk.Gtk3theme.Pop-dark"
+      ],
+      "sources": [
+        {
+          "type": "file",
+          "path": "org.gtk.Gtk3theme.Pop-dark.appdata.xml"
+        }
+      ]
+  }
+  ]
+}
